@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import spacy
 import re
+#enter this into shell to run program -> python -m spacy download en_core_web_sm 
 
 nlp = spacy.load('en_core_web_sm')
 
