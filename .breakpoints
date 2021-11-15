@@ -1,11 +1,19 @@
 {
   "files": {
+    "inde.py": [
+      {
+        "id": "e36f127a-9307-439f-8c71-d11c4d3f5e69",
+        "line": 1,
+        "version": 0,
+        "index": 0
+      }
+    ],
     "main.py": [
       {
         "id": "2d9d57ca-9fdd-4a41-a582-e81c7ba05bf7",
-        "line": 40,
-        "version": 3963,
-        "index": 943
+        "line": 6,
+        "version": 4099,
+        "index": 101
       }
     ]
   }

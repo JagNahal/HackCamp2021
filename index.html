@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Heading</h1>
+<table>
+  <tr>
+    {% for header in headings %}
+    <th> {{ header }} </th>
+    {% endfor %}
+  </tr>
+  {% for row in data %}
+  <td> {{ row }}</td>
+</table>
+
+</body>
+</html>

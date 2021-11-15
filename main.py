@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from collections import Counter
 import spacy
 import re
-import urllib.request
 
 nlp = spacy.load('en_core_web_sm')
 pie = 'man, Jimmy Jimmy really likes pie!'
@@ -12,19 +11,28 @@ doc = nlp(pie)
 results = []
 ACCEPTED_POS = ('PROPN', 'NOUN', 'VERB')
 
-def pos_frequency(str):
-  doc = nlp(str)
-  for token in doc:
-    if token.pos_ in ACCEPTED_POS:
-        results.append(token)
-
-
+def pos_frequency(projects):
   frequencies = {}
-  for token in results:
-    if token.lemma_ in frequencies:
-      frequencies[token.lemma_] +=1
-    elif token.lemma_ not in frequencies:
-      frequencies[token.lemma_] = 1
+  count = 0
+  for project in projects:
+    if project.get("href") == None:
+      continue
+
+    response = requests.get(project.get('href'))
+    html = response.text
+    soup = BeautifulSoup(html, "html.parser")
+    div = soup.find('div',{'id':"app-details-left"})
+    
+    doc = nlp(div.text)
+    count += 1
+
+    for token in doc:
+      if token.pos_ in ACCEPTED_POS:
+        if token.lemma_ in frequencies:
+          frequencies[token.lemma_] +=1
+        elif token.lemma_ not in frequencies:
+          frequencies[token.lemma_] = 1
+  print(count)
   return frequencies
 
 
@@ -38,12 +46,10 @@ link = re.findall("href",'block-wrapper-link fade link-to-software')
 
 soup = BeautifulSoup(html, "html.parser")
 projects = soup.findAll('a',{'class':"block-wrapper-link fade link-to-software"})
+print(len(projects))
 for project in projects:
- print(project.get('href'))
- all_dict = pos_frequency(project.text)
- print(all_dict)
-for keys in all_dict:
-  print(keys)
+  print(project.get('href'))
+print(pos_frequency(projects))
 
 
 
