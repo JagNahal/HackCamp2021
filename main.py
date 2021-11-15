@@ -1,12 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-from collections import Counter
 import spacy
 import re
 
 nlp = spacy.load('en_core_web_sm')
-pie = 'man, Jimmy Jimmy really likes pie!'
-doc = nlp(pie)
+
+#'man, Jimmy Jimmy really likes pie!'
+
 
 results = []
 ACCEPTED_POS = ('PROPN', 'NOUN', 'VERB')
@@ -32,7 +32,6 @@ def pos_frequency(projects):
           frequencies[token.lemma_] +=1
         elif token.lemma_ not in frequencies:
           frequencies[token.lemma_] = 1
-  print(count)
   return frequencies
 
 
@@ -46,21 +45,24 @@ link = re.findall("href",'block-wrapper-link fade link-to-software')
 
 soup = BeautifulSoup(html, "html.parser")
 projects = soup.findAll('a',{'class':"block-wrapper-link fade link-to-software"})
-print(len(projects))
-for project in projects:
-  print(project.get('href'))
-print(pos_frequency(projects))
 
+results = pos_frequency(projects)
+results ={k: v for k, v in sorted(results.items(), key=lambda item: item[1],reverse = True)}
 
+keys = []
+for key in results:
+  keys.append(key)
 
+keys = keys
+ai_data = ' '.join(keys[0:24])
+r = requests.post(
+    "https://api.deepai.org/api/text-generator",
+    data={
+        'text': ai_data,
+    },
+    headers={'api-key': '41f74417-b15d-4dbb-b2c3-67511c6c3a2b'}
+)
+ai_paragraph = r.json()["output"]
+print(ai_paragraph)
 
-  
-'''common_words = soup.text.split()
-  print(project.get('href'))
-  print(Counter(common_words).most_common(50))
-
-import en_core_web_sm
-nlp = en_core_web_sm.load()
-
-soup.find_all("p", text=re.complie("UK"))'''
 
