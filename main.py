@@ -7,7 +7,6 @@ nlp = spacy.load('en_core_web_sm')
 
 #'man, Jimmy Jimmy really likes pie!'
 
-
 results = []
 ACCEPTED_POS = ('PROPN', 'NOUN', 'VERB')
 
@@ -36,8 +35,6 @@ def pos_frequency(projects):
 
 
 url = "https://devpost.com/software"
-
-#html = url("https://devpost.com/software")
 
 response = requests.get(url)
 html = response.text
