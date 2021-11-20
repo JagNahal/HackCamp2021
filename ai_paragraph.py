@@ -1,3 +1,4 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import spacy
@@ -78,7 +79,7 @@ def generate_ai_paragraph(words):
       data={
           'text': ai_data,
       },
-      headers={'api-key': '41f74417-b15d-4dbb-b2c3-67511c6c3a2b'}
+      headers={'api-key': os.environ['API_KEY']}
   )
   return r.json()["output"]
 
@@ -92,3 +93,5 @@ def generate():
 
 if __name__ == "__main__":
     generate()
+
+os.environ['API_KEY']
